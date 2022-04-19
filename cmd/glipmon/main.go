@@ -34,7 +34,6 @@ func main() {
 	exit := make(chan interface{}, 1)
 	signal.Notify(sigChannel, syscall.SIGINT, syscall.SIGTERM)
 	board := NewClipBoard()
-	// check for clipboard changes
 	go func() {
 		for {
 			time.Sleep(time.Second * 1)
@@ -48,7 +47,6 @@ func main() {
 			board.Unlock()
 		}
 	}()
-	//listen for sigterms etc to exit program.
 	go func() {
 		test := <-sigChannel
 		exit <- test
@@ -56,4 +54,3 @@ func main() {
 	<-exit
 	fmt.Fprintf(os.Stderr, "Exiting...")
 }
-
